@@ -11,6 +11,7 @@
         }
     }
 
+    // Построить дерево каталогов
     function buildTree(items = [], parentId = null) {
         return items
             .filter(item => item.parent_id === parentId)
@@ -35,7 +36,18 @@
                         {#if item.children.length > 0}
                             <ul>
                                 {#each item.children as child}
-                                    <li><a href={`/${child.slug}`}>{child.pagetitle}</a></li>
+                                    <li>
+                                        <a href={`/${child.slug}`}>{child.pagetitle}</a>
+                                        {#if child.children.length > 0}
+                                            <ul>
+                                                {#each child.children as subchild}
+                                                    <li>
+                                                        <a href={`/${subchild.slug}`}>{subchild.pagetitle}</a>
+                                                    </li>
+                                                {/each}
+                                            </ul>
+                                        {/if}
+                                    </li>
                                 {/each}
                             </ul>
                         {/if}
@@ -51,6 +63,18 @@
 </nav>
 
 <style>
-    ul { list-style: none; padding: 0; }
-    ul ul { margin-left: 20px; }
+    ul {
+        list-style: none;
+        padding: 0;
+    }
+    ul ul {
+        margin-left: 20px;
+    }
+    a {
+        text-decoration: none;
+        color: #333;
+    }
+    a:hover {
+        text-decoration: underline;
+    }
 </style>
