@@ -1,8 +1,8 @@
-import { getItemBySlug } from '$lib/api';
+import { getItemBySlug, getGalleryImages } from '$lib/api';
 
 export async function load({ params }) {
-    const path = params.path.split('/'); // Разделяем путь на сегменты
-    const slug = path[path.length - 1]; // Берем последний сегмент как slug
+    const path = params.path.split('/');
+    const slug = path[path.length - 1];
     console.log('Loading page for path:', params.path, 'slug:', slug);
     try {
         const item = await getItemBySlug(slug);
@@ -10,8 +10,9 @@ export async function load({ params }) {
             console.log('No content found for slug:', slug);
             throw { status: 404, message: 'Страница не найдена или нет содержимого' };
         }
-        console.log('Item loaded:', item);
-        return { item };
+        const gallery = item.gallery ? await getGalleryImages(item.gallery) : [];
+        console.log('Item loaded:', item, 'Gallery:', gallery);
+        return { item, gallery };
     } catch (error) {
         console.error('Error loading page:', error);
         return {
