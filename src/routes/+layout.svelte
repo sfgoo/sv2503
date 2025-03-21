@@ -1,6 +1,10 @@
 <script>
-	import '../app.css';
-	let { children } = $props();
+    import Nav from '$lib/Nav.svelte';
 </script>
 
-{@render children()}
+<header>
+    <Nav />
+</header>
+<main>
+    <slot />
+</main>
