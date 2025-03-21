@@ -49,3 +49,8 @@
         <p>Ошибка: {error.message}</p>
     {/await}
 </nav>
+
+<style>
+    ul { list-style: none; padding: 0; }
+    ul ul { margin-left: 20px; }
+</style>
