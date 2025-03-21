@@ -1,65 +1,27 @@
 <script>
-    import { getCatalog } from '$lib/api';
-    let catalog = [];
+    import MenuItem from './MenuItem.svelte';
+    export let catalog = [];
 
-    async function loadCatalog() {
-        try {
-            catalog = await getCatalog();
-        } catch (error) {
-            console.error('Ошибка загрузки каталога:', error);
-            catalog = [];
-        }
-    }
-
-    // Построить дерево каталогов
     function buildTree(items = [], parentId = null) {
         return items
-            .filter(item => item.parent_id === parentId)
+            .filter(item => item.parent_id === parentId) // Исправлено Altonparent_id на parent_id
             .map(item => ({
                 ...item,
                 children: buildTree(items, item.id)
             }));
     }
-
-    loadCatalog();
 </script>
 
 <nav>
-    {#await catalog}
-        <p>Загрузка...</p>
-    {:then items}
-        {#if items.length > 0}
-            <ul>
-                {#each buildTree(items) as item}
-                    <li>
-                        <a href={`/${item.slug}`}>{item.pagetitle}</a>
-                        {#if item.children.length > 0}
-                            <ul>
-                                {#each item.children as child}
-                                    <li>
-                                        <a href={`/${child.slug}`}>{child.pagetitle}</a>
-                                        {#if child.children.length > 0}
-                                            <ul>
-                                                {#each child.children as subchild}
-                                                    <li>
-                                                        <a href={`/${subchild.slug}`}>{subchild.pagetitle}</a>
-                                                    </li>
-                                                {/each}
-                                            </ul>
-                                        {/if}
-                                    </li>
-                                {/each}
-                            </ul>
-                        {/if}
-                    </li>
-                {/each}
-            </ul>
-        {:else}
-            <p>Каталог пуст</p>
-        {/if}
-    {:catch error}
-        <p>Ошибка: {error.message}</p>
-    {/await}
+    {#if catalog.length > 0}
+        <ul>
+            {#each buildTree(catalog) as item}
+                <MenuItem {item} />
+            {/each}
+        </ul>
+    {:else}
+        <p>Каталог пуст</p>
+    {/if}
 </nav>
 
 <style>

@@ -2,22 +2,20 @@ import { getItemBySlug } from '$lib/api';
 
 export async function load({ params }) {
     const { slug } = params;
-    console.log('Loading slug:', slug); // Логируем slug для проверки
+    console.log('Loading page for slug:', slug);
     try {
         const item = await getItemBySlug(slug);
-        console.log('Item loaded:', item); // Логируем полученные данные
+        console.log('Item loaded:', item);
         if (!item) {
-            return {
-                status: 404,
-                error: 'Страница не найдена'
-            };
+            console.log('No item found for slug:', slug);
+            throw { status: 404, message: 'Страница не найдена' };
         }
         return { item };
     } catch (error) {
-        console.error('Error in load:', error);
+        console.error('Error loading page:', error);
         return {
-            status: 500,
-            error: `Ошибка загрузки: ${error.message}`
+            status: error.status || 500,
+            error: error.message || 'Ошибка загрузки'
         };
     }
 }
