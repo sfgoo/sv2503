@@ -72,9 +72,9 @@
 }</component>
   <component name="RecentsManager">
     <key name="MoveFile.RECENT_KEYS">
+      <recent name="$PROJECT_DIR$" />
       <recent name="$PROJECT_DIR$/src" />
       <recent name="$PROJECT_DIR$/src/routes" />
-      <recent name="$PROJECT_DIR$" />
     </key>
   </component>
   <component name="SharedIndexes">
@@ -94,7 +94,7 @@
       <updated>1741683797239</updated>
       <workItem from="1741683798292" duration="1086000" />
       <workItem from="1741685318630" duration="22179000" />
-      <workItem from="1742325564309" duration="77004000" />
+      <workItem from="1742325564309" duration="99393000" />
     </task>
     <servers />
   </component>

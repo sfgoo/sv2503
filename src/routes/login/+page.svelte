@@ -1,6 +1,7 @@
 <script>
     import { goto } from '$app/navigation';
     import { getCurrentUser } from '$lib/api';
+    import { onMount } from 'svelte';
     let email = '';
     let password = '';
     let error = '';
@@ -26,17 +27,44 @@
             localStorage.setItem('refresh_token', data.refresh_token);
             console.log('Token saved:', localStorage.getItem('directus_token'));
 
-            // Проверяем пользователя сразу после входа
             await getCurrentUser();
-            // Отправляем событие для немедленного обновления
             window.dispatchEvent(new Event('authChange'));
-
-            goto('/'); // Переход на главную
+            goto('/');
         } catch (err) {
             error = err.message;
             console.error('Login error:', err);
         }
     }
+
+    // Callback для Telegram Login
+    function handleTelegramResponse(user) {
+        console.log('Telegram auth response:', user);
+        fetch('/api/telegram-auth', {
+            method: 'POST',
+            headers: { 'Content-Type': 'application/json' },
+            body: JSON.stringify(user)
+        })
+            .then(response => response.json())
+            .then(data => {
+                console.log('Telegram auth server response:', data);
+                if (data.success) {
+                    localStorage.setItem('directus_token', data.access_token);
+                    window.dispatchEvent(new Event('authChange'));
+                    goto('/');
+                } else {
+                    error = 'Ошибка авторизации через Telegram: ' + (data.error || 'Неизвестная ошибка');
+                }
+            })
+            .catch(err => {
+                error = 'Ошибка сервера при авторизации через Telegram';
+                console.error('Telegram auth fetch error:', err);
+            });
+    }
+
+    onMount(() => {
+        // Делаем handleTelegramResponse глобальной для Telegram Widget
+        window.handleTelegramResponse = handleTelegramResponse;
+    });
 </script>
 
 <h1>Вход</h1>
@@ -52,7 +80,19 @@
     <button type="submit">Войти</button>
     <a href="/register">Зарегистрироваться</a>
 </form>
-<div id="telegram-login" style="margin-top: 20px; text-align: center;"></div>
+
+<!-- Telegram Login Widget -->
+<div id="telegram-login" style="margin-top: 20px; text-align: center;">
+    <script
+            async
+            src="https://telegram.org/js/telegram-widget.js?22"
+            data-telegram-login="PublitaBot"
+            data-size="large"
+            data-onauth="handleTelegramResponse(user)"
+            data-request-access="write"
+    ></script>
+</div>
+
 {#if error}
     <p style="color: red">{error}</p>
 {/if}

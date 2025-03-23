@@ -28,7 +28,6 @@
 
     onMount(() => {
         loadUser();
-        // Слушаем событие authChange
         window.addEventListener('authChange', loadUser);
     });
 </script>
