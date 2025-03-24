@@ -1,4 +1,5 @@
 <script>
+    // src/lib/MenuItem.svelte
     export let item;
     export let catalog; // Передаем весь каталог для поиска родителей
 

@@ -1,4 +1,5 @@
 <script>
+    // src/routes/%5B...path%5D/+page.svelte
     export let data;
     $: item = data.item;
     $: gallery = data.gallery || [];

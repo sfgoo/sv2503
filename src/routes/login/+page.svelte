@@ -1,4 +1,5 @@
 <script>
+    // src/routes/login/+page.svelte
     import { goto } from '$app/navigation';
     import { getCurrentUser } from '$lib/api';
     let email = '';

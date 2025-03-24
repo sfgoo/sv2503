@@ -1,3 +1,5 @@
+// filepath /src/routes/+page.server.js
+
 import { getCatalog } from '$lib/api';
 
 export async function load() {

@@ -1,4 +1,5 @@
 <script>
+    // src/lib/Nav.svelte
     import MenuItem from './MenuItem.svelte';
     export let catalog = [];
 

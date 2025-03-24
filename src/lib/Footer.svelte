@@ -1,4 +1,5 @@
 <script>
+  // src/lib/Footer.svelte
   // No script needed for static content, but can add interactivity if necessary
 </script>
 

@@ -1,4 +1,5 @@
 <script>
+    // src/routes/register/+page.svelte
     import { onMount } from 'svelte';
     import { goto } from '$app/navigation';
     let email = '';

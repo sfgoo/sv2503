@@ -1,3 +1,4 @@
+// filepath /src/routes/+layout.server.js
 import { getCatalog } from '$lib/api';
 
 export async function load() {

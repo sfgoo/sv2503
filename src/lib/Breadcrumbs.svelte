@@ -1,4 +1,5 @@
 <script>
+    // src/lib/Breadcrumbs.svelte
     export let catalog = [];
     export let currentSlug;
 

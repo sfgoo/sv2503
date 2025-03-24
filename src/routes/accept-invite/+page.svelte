@@ -1,4 +1,5 @@
 <script>
+    // src/routes/accept-invite/+page.svelte
     import { goto } from '$app/navigation';
     import { page } from '$app/stores';
     let password = '';

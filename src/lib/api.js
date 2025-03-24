@@ -1,3 +1,4 @@
+// src/lib/api.js
 const API_URL = 'https://dir.chishmy.ru/items/items';
 const GALLERY_URL = 'https://dir.chishmy.ru/items/gallery';
 const GALLERY_FILES_URL = 'https://dir.chishmy.ru/items/gallery_files';
