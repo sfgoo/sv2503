@@ -11,13 +11,11 @@ const dirname =
 // More info at: https://storybook.js.org/docs/writing-tests/test-addon
 export default defineConfig({
 
-	server: {
+	erver: {
 		allowedHosts: [
 			'0eca-195-133-8-97.ngrok-free.app', // Ваш ngrok-домен
 		],
 	},
-
-
 	plugins: [tailwindcss(), sveltekit()],
 	test: {
 		workspace: [
