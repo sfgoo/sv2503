@@ -5,6 +5,7 @@
     import { getCurrentUser } from '$lib/api';
     import Nav from '$lib/Nav.svelte';
     import Breadcrumbs from '$lib/Breadcrumbs.svelte';
+    import Footer from '$lib/Footer.svelte';
     export let data;
     $: catalog = data.catalog || [];
     let user = { role: 'anonymous' };
@@ -49,6 +50,8 @@
     {/if}
     <slot />
 </main>
+
+<Footer />
 
 <style>
     header {
