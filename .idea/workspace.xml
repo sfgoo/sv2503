@@ -4,14 +4,7 @@
     <option name="autoReloadType" value="SELECTIVE" />
   </component>
   <component name="ChangeListManager">
-    <list default="true" id="753d3cf9-10cb-4dde-90b1-41ea1d88284f" name="Changes" comment="">
-      <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/lib/Breadcrumbs.svelte" beforeDir="false" afterPath="$PROJECT_DIR$/src/lib/Breadcrumbs.svelte" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/lib/Footer.svelte" beforeDir="false" afterPath="$PROJECT_DIR$/src/lib/Footer.svelte" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/lib/Nav.svelte" beforeDir="false" afterPath="$PROJECT_DIR$/src/lib/Nav.svelte" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/lib/api.js" beforeDir="false" afterPath="$PROJECT_DIR$/src/lib/api.js" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/routes/+layout.svelte" beforeDir="false" afterPath="$PROJECT_DIR$/src/routes/+layout.svelte" afterDir="false" />
-    </list>
+    <list default="true" id="753d3cf9-10cb-4dde-90b1-41ea1d88284f" name="Changes" comment="" />
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
     <option name="HIGHLIGHT_NON_ACTIVE_CHANGELIST" value="false" />
@@ -115,6 +108,7 @@
       <breakpoints>
         <line-breakpoint enabled="true" type="javascript">
           <url>file://$PROJECT_DIR$/src/lib/api.js</url>
+          <line>1</line>
           <option name="timeStamp" value="1" />
         </line-breakpoint>
         <line-breakpoint enabled="true" type="javascript">
