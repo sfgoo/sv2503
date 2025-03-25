@@ -1,5 +1,4 @@
 import { svelteTesting } from '@testing-library/svelte/vite';
-import tailwindcss from '@tailwindcss/vite';
 import { sveltekit } from '@sveltejs/kit/vite';
 import { defineConfig } from 'vite';
 import path from 'node:path';
@@ -7,16 +6,18 @@ import { fileURLToPath } from 'node:url';
 import { storybookTest } from '@storybook/experimental-addon-test/vitest-plugin';
 const dirname =
 	typeof __dirname !== 'undefined' ? __dirname : path.dirname(fileURLToPath(import.meta.url));
-
+ 
 // More info at: https://storybook.js.org/docs/writing-tests/test-addon
 export default defineConfig({
-
 	server: {
 		allowedHosts: [
 			'0eca-195-133-8-97.ngrok-free.app', // Ваш ngrok-домен
 		],
 	},
-	plugins: [tailwindcss(), sveltekit()],
+	plugins: [sveltekit()],
+	css: {
+		postcss: './postcss.config.js',
+	},
 	test: {
 		workspace: [
 			{

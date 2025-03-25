@@ -1,5 +1,6 @@
 <script>
     // filepath src/routes/+layout.svelte
+    import '../app.css';
     import { onMount } from 'svelte';
     import { page } from '$app/stores';
     import { goto } from '$app/navigation';
@@ -53,7 +54,7 @@
 </main>
 
 <Footer />
-
+<div class="text-red-500">Если это красное — Tailwind работает!</div>
 <style>
     header {
         display: flex;
