@@ -5,23 +5,23 @@
 import { getItemBySlug, getGalleryImages } from '$lib/api';
 
 export async function load({ params }) {
-    const path = params.path.split('/');
-    const slug = path[path.length - 1];
-    console.log('Loading page for path:', params.path, 'slug:', slug);
+    if (!params.path) return { status: 404 };
+
     try {
-        const item = await getItemBySlug(slug);
-        if (!item || !item.content) {
-            console.log('No content found for slug:', slug);
-            throw { status: 404, message: 'Страница не найдена или нет содержимого' };
-        }
-        const gallery = item.gallery ? await getGalleryImages(item.gallery) : [];
-        console.log('Item loaded:', item, 'Gallery:', gallery);
-        return { item, gallery };
-    } catch (error) {
-        console.error('Error loading page:', error);
+        const item = await getItemBySlug(params.path);
+        if (!item) return { status: 404 };
+
+        const galleryImages = item.gallery
+          ? await getGalleryImages(item.gallery)
+          : [];
+
         return {
-            status: error.status || 500,
-            error: error.message || 'Ошибка загрузки'
+            props: { item, galleryImages }
+        };
+    } catch (error) {
+        return {
+            status: 500,
+            error: error.message
         };
     }
 }
