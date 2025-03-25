@@ -1,7 +1,7 @@
 {
 	"name": "sv2503",
 	"private": true,
-	"version": "0.1.127837",
+	"version": "0.1.12222",
 	"type": "module",
 	"scripts": {
 		"dev": "vite dev",
