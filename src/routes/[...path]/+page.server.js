@@ -1,6 +1,6 @@
 // This file is used to load data for dynamic pages. It is called before the page component is created.
 
-// src/routes/%5B...path%5D/+page.server.js
+// src/routes/[...path]/+page.server.js
 
 import { getItemBySlug, getGalleryImages } from '$lib/api';
 

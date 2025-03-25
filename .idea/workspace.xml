@@ -6,23 +6,8 @@
   <component name="ChangeListManager">
     <list default="true" id="753d3cf9-10cb-4dde-90b1-41ea1d88284f" name="Changes" comment="">
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/lib/Breadcrumbs.svelte" beforeDir="false" afterPath="$PROJECT_DIR$/src/lib/Breadcrumbs.svelte" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/lib/Footer.svelte" beforeDir="false" afterPath="$PROJECT_DIR$/src/lib/Footer.svelte" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/lib/MenuItem.svelte" beforeDir="false" afterPath="$PROJECT_DIR$/src/lib/MenuItem.svelte" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/lib/Nav.svelte" beforeDir="false" afterPath="$PROJECT_DIR$/src/lib/Nav.svelte" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/lib/api.js" beforeDir="false" afterPath="$PROJECT_DIR$/src/lib/api.js" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/routes/+layout.js" beforeDir="false" afterPath="$PROJECT_DIR$/src/routes/+layout.js" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/routes/+layout.server.js" beforeDir="false" afterPath="$PROJECT_DIR$/src/routes/+layout.server.js" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/app.html" beforeDir="false" afterPath="$PROJECT_DIR$/src/app.html" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/routes/+layout.svelte" beforeDir="false" afterPath="$PROJECT_DIR$/src/routes/+layout.svelte" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/routes/+page.server.js" beforeDir="false" afterPath="$PROJECT_DIR$/src/routes/+page.server.js" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/routes/+page.svelte" beforeDir="false" afterPath="$PROJECT_DIR$/src/routes/+page.svelte" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/routes/[...path]/+page.server.js" beforeDir="false" afterPath="$PROJECT_DIR$/src/routes/[...path]/+page.server.js" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/routes/[...path]/+page.svelte" beforeDir="false" afterPath="$PROJECT_DIR$/src/routes/[...path]/+page.svelte" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/routes/accept-invite/+page.svelte" beforeDir="false" afterPath="$PROJECT_DIR$/src/routes/accept-invite/+page.svelte" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/routes/login/+page.svelte" beforeDir="false" afterPath="$PROJECT_DIR$/src/routes/login/+page.svelte" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/routes/page.svelte.test.js" beforeDir="false" afterPath="$PROJECT_DIR$/src/routes/page.svelte.test.js" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/routes/register/+page.js" beforeDir="false" afterPath="$PROJECT_DIR$/src/routes/register/+page.js" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/routes/register/+page.svelte" beforeDir="false" afterPath="$PROJECT_DIR$/src/routes/register/+page.svelte" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -68,28 +53,28 @@
     <option name="hideEmptyMiddlePackages" value="true" />
     <option name="showLibraryContents" value="true" />
   </component>
-  <component name="PropertiesComponent"><![CDATA[{
-  "keyToString": {
-    "RunOnceActivity.ShowReadmeOnStart": "true",
-    "RunOnceActivity.git.unshallow": "true",
-    "WebServerToolWindowPanel.toolwindow.highlight.mappings": "true",
-    "WebServerToolWindowPanel.toolwindow.highlight.symlinks": "true",
-    "WebServerToolWindowPanel.toolwindow.show.date": "false",
-    "WebServerToolWindowPanel.toolwindow.show.permissions": "false",
-    "WebServerToolWindowPanel.toolwindow.show.size": "false",
-    "git-widget-placeholder": "main",
-    "list.type.of.created.stylesheet": "CSS",
-    "node.js.detected.package.eslint": "true",
-    "node.js.detected.package.tslint": "true",
-    "node.js.selected.package.eslint": "(autodetect)",
-    "node.js.selected.package.tslint": "(autodetect)",
-    "nodejs_package_manager_path": "npm",
-    "prettierjs.PrettierConfiguration.Package": "/Users/ooosfg/WebstormProjects/sv2503/node_modules/prettier",
-    "settings.editor.selected.configurable": "editing.templates",
-    "ts.external.directory.path": "/Applications/WebStorm.app/Contents/plugins/javascript-plugin/jsLanguageServicesImpl/external",
-    "vue.rearranger.settings.migration": "true"
+  <component name="PropertiesComponent">{
+  &quot;keyToString&quot;: {
+    &quot;RunOnceActivity.ShowReadmeOnStart&quot;: &quot;true&quot;,
+    &quot;RunOnceActivity.git.unshallow&quot;: &quot;true&quot;,
+    &quot;WebServerToolWindowPanel.toolwindow.highlight.mappings&quot;: &quot;true&quot;,
+    &quot;WebServerToolWindowPanel.toolwindow.highlight.symlinks&quot;: &quot;true&quot;,
+    &quot;WebServerToolWindowPanel.toolwindow.show.date&quot;: &quot;false&quot;,
+    &quot;WebServerToolWindowPanel.toolwindow.show.permissions&quot;: &quot;false&quot;,
+    &quot;WebServerToolWindowPanel.toolwindow.show.size&quot;: &quot;false&quot;,
+    &quot;git-widget-placeholder&quot;: &quot;main&quot;,
+    &quot;list.type.of.created.stylesheet&quot;: &quot;CSS&quot;,
+    &quot;node.js.detected.package.eslint&quot;: &quot;true&quot;,
+    &quot;node.js.detected.package.tslint&quot;: &quot;true&quot;,
+    &quot;node.js.selected.package.eslint&quot;: &quot;(autodetect)&quot;,
+    &quot;node.js.selected.package.tslint&quot;: &quot;(autodetect)&quot;,
+    &quot;nodejs_package_manager_path&quot;: &quot;npm&quot;,
+    &quot;prettierjs.PrettierConfiguration.Package&quot;: &quot;/Users/ooosfg/WebstormProjects/sv2503/node_modules/prettier&quot;,
+    &quot;settings.editor.selected.configurable&quot;: &quot;editing.templates&quot;,
+    &quot;ts.external.directory.path&quot;: &quot;/Applications/WebStorm.app/Contents/plugins/javascript-plugin/jsLanguageServicesImpl/external&quot;,
+    &quot;vue.rearranger.settings.migration&quot;: &quot;true&quot;
   }
-}]]></component>
+}</component>
   <component name="RecentsManager">
     <key name="MoveFile.RECENT_KEYS">
       <recent name="$PROJECT_DIR$/src" />
@@ -126,19 +111,11 @@
       <breakpoints>
         <line-breakpoint enabled="true" type="javascript">
           <url>file://$PROJECT_DIR$/src/lib/api.js</url>
-          <properties lambdaOrdinal="-1" />
           <option name="timeStamp" value="1" />
         </line-breakpoint>
         <line-breakpoint enabled="true" type="javascript">
           <url>file://$PROJECT_DIR$/src/lib/Footer.svelte</url>
-          <properties lambdaOrdinal="-1" />
           <option name="timeStamp" value="2" />
-        </line-breakpoint>
-        <line-breakpoint enabled="true" type="javascript">
-          <url>file://$PROJECT_DIR$/src/lib/MenuItem.svelte</url>
-          <line>6</line>
-          <properties lambdaOrdinal="-1" />
-          <option name="timeStamp" value="3" />
         </line-breakpoint>
       </breakpoints>
     </breakpoint-manager>

@@ -1,4 +1,3 @@
-
 <script>
     // filepath src/routes/+layout.svelte
     import { onMount } from 'svelte';
