@@ -1,6 +1,31 @@
 @tailwind base;
 @tailwind components;
 @tailwind utilities;
+
 body {
     @apply text-gray-800 bg-gray-100;
+}
+
+/* Стили для выпадающего меню */
+.group:hover .group-hover\:block {
+    display: block;
+}
+
+/* Обеспечиваем, чтобы подменю не исчезало при наведении */
+.group-hover\:block {
+    display: none;
+}
+
+/* Добавляем небольшую задержку для более плавного взаимодействия */
+.group-hover\:block {
+    transition-delay: 0.1s;
+}
+
+/* Стили для мобильного меню */
+@media (max-width: 640px) {
+    .group-hover\:block {
+        position: static !important;
+        box-shadow: none;
+        margin-left: 1rem;
+    }
 }

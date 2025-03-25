@@ -13,7 +13,7 @@
 	}
 </script>
 
-<nav class="bg-gray-800">
+<nav class="bg-gray-800 fixed top-0 left-0 w-full z-50">
 	<div class="mx-auto max-w-7xl px-2 sm:px-6 lg:px-8">
 		<div class="relative flex h-16 items-center justify-between">
 			<div class="absolute inset-y-0 left-0 flex items-center sm:hidden">
@@ -35,7 +35,7 @@
 				<div class="hidden sm:ml-6 sm:block">
 					<div class="flex space-x-4">
 						{#each buildTree(catalog) as item}
-							<MenuItem {item} catalog={catalog} />
+							<MenuItem {item} catalog={catalog} level={1} />
 						{/each}
 					</div>
 				</div>
@@ -58,7 +58,7 @@
 							<img class="size-8 rounded-full" src="https://images.unsplash.com/photo-1472099645785-5658abf4ff4e?ixlib=rb-1.2.1&ixid=eyJhcHBfaWQiOjEyMDd9&auto=format&fit=facearea&facepad=2&w=256&h=256&q=80" alt="">
 						</button>
 					</div>
-					<div class="absolute right-0 z-10 mt-2 w-48 origin-top-right rounded-md bg-white py-1 ring-1 shadow-lg ring-black/5 focus:outline-hidden" role="menu" aria-orientation="vertical" aria-labelledby="user-menu-button" tabindex="-1">
+					<div class="absolute right-0 z-10 mt-2 w-48 origin-top-right rounded-md bg-white py-1 ring-1 shadow-lg ring-black/5 focus:outline-hidden hidden" role="menu" aria-orientation="vertical" aria-labelledby="user-menu-button" tabindex="-1">
 						<a href="#" class="block px-4 py-2 text-sm text-gray-700" role="menuitem" tabindex="-1" id="user-menu-item-0">Your Profile</a>
 						<a href="#" class="block px-4 py-2 text-sm text-gray-700" role="menuitem" tabindex="-1" id="user-menu-item-1">Settings</a>
 						<a href="#" class="block px-4 py-2 text-sm text-gray-700" role="menuitem" tabindex="-1" id="user-menu-item-2">Sign out</a>
@@ -70,7 +70,7 @@
 	<div class="sm:hidden" id="mobile-menu">
 		<div class="space-y-1 px-2 pt-2 pb-3">
 			{#each buildTree(catalog) as item}
-				<MenuItem {item} catalog={catalog} />
+				<MenuItem {item} catalog={catalog} level={1} />
 			{/each}
 		</div>
 	</div>
