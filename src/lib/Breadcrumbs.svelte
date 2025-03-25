@@ -1,29 +1,22 @@
 <script>
-    // src/lib/Breadcrumbs.svelte
     export let catalog = [];
     export let currentSlug;
 
-    // Функция для поиска элемента по slug
-    function findItemBySlug(slug) {
-        return catalog.find(item => item.slug === slug);
-    }
+    $: breadcrumbs = (() => {
+        const result = [];
+        let current = catalog.find(item => item.slug === currentSlug);
 
-    // Построение пути для хлебных крошек
-    function buildBreadcrumbs(slug) {
-        const breadcrumbs = [];
-        let current = findItemBySlug(slug);
         while (current) {
-            breadcrumbs.unshift({
-                pagetitle: current.pagetitle,
-                slug: current.slug,
+            result.unshift({
+                title: current.pagetitle,
                 path: getFullPath(current)
             });
             current = catalog.find(item => item.id === current.parent_id);
         }
-        return breadcrumbs;
-    }
 
-    // Функция для построения полного пути (аналогично Nav.svelte)
+        return result;
+    })();
+
     function getFullPath(item) {
         const segments = [];
         let current = item;
@@ -31,21 +24,18 @@
             segments.unshift(current.slug);
             current = catalog.find(i => i.id === current.parent_id);
         }
-        return segments.join('/');
+        return `/${segments.join('/')}`;
     }
-
-    $: breadcrumbs = buildBreadcrumbs(currentSlug);
-    $: isTopLevel = findItemBySlug(currentSlug)?.parent_id === null;
 </script>
 
-{#if !isTopLevel && breadcrumbs.length > 0}
+{#if breadcrumbs.length > 1}
     <nav class="breadcrumbs">
-        {#each breadcrumbs as crumb, index}
-            {#if index < breadcrumbs.length - 1}
-                <a href={`/${crumb.path}`}>{crumb.pagetitle}</a>
-                <span> > </span>
+        {#each breadcrumbs as crumb, i}
+            {#if i < breadcrumbs.length - 1}
+                <a href={crumb.path}>{crumb.title}</a>
+                <span class="separator">/</span>
             {:else}
-                <span>{crumb.pagetitle}</span>
+                <span class="current">{crumb.title}</span>
             {/if}
         {/each}
     </nav>
@@ -53,17 +43,28 @@
 
 <style>
     .breadcrumbs {
-        margin: 10px 0;
-        font-size: 14px;
+        display: flex;
+        align-items: center;
+        flex-wrap: wrap;
+        margin-bottom: 1rem;
+        font-size: 0.9rem;
     }
-    a {
-        text-decoration: none;
+
+    .breadcrumbs a {
         color: #007bff;
+        text-decoration: none;
     }
-    a:hover {
+
+    .breadcrumbs a:hover {
         text-decoration: underline;
     }
-    span {
-        color: #333;
+
+    .separator {
+        margin: 0 0.5rem;
+        color: #6c757d;
+    }
+
+    .current {
+        color: #6c757d;
     }
 </style>

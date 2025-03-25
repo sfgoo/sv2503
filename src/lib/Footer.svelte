@@ -1,18 +1,30 @@
 <script>
-  // src/lib/Footer.svelte
-  // No script needed for static content, but can add interactivity if necessary
+  export let year = new Date().getFullYear();
+  export let companyName = "Моя Компания";
 </script>
 
 <footer class="footer">
-  <p>© 2025 Your Company Name. All rights reserved.</p>
+  <div class="footer-content">
+    <p>© {year} {companyName}. Все права защищены.</p>
+  </div>
 </footer>
 
 <style>
   .footer {
+    background: #343a40;
+    color: white;
+    padding: 2rem 0;
+    margin-top: auto;
+  }
+
+  .footer-content {
+    max-width: 1200px;
+    margin: 0 auto;
+    padding: 0 1rem;
     text-align: center;
-    padding: 20px;
-    background-color: #f1f1f1;
-    color: #333;
-    font-size: 0.9em;
+  }
+
+  .footer p {
+    margin: 0;
   }
 </style>
