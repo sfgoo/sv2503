@@ -6,7 +6,7 @@
      export let level = 1; // Уровень вложенности, начиная с 1
  
      // Максимальный уровень вложенности
-     const MAX_LEVEL = 3;
+     const MAX_LEVEL = 4;
  
      // Функция для построения полного пути (можно вынести в утилиту, если используется в нескольких местах)
      function getFullPath(item, items) {
@@ -24,13 +24,16 @@
      let hasChildren = item.children && item.children.length > 0 && level < MAX_LEVEL;
      
      function handleClick(event) {
-         if (hasChildren && level === 1) {
-             // Для первого уровня с детьми - переключаем подменю
+         if (hasChildren) {
+             // Для любого уровня с детьми - переключаем подменю
              isOpen = !isOpen;
              // Предотвращаем переход по ссылке только если есть дочерние элементы
              event.preventDefault();
+             
+             // Добавляем класс для отладки
+             console.log(`Clicked menu item at level ${level}, isOpen: ${isOpen}`);
          }
-         // Для элементов без детей или не первого уровня - обычное поведение ссылки
+         // Для элементов без детей - обычное поведение ссылки
      }
      
      // Обработчики для мобильного меню
@@ -42,7 +45,7 @@
      }
  </script>
  
- <div class="menu-item relative {level === 1 ? 'top-level' : ''}" class:has-children={hasChildren}>
+ <div class="menu-item relative {level === 1 ? 'top-level' : ''} level-{level}" class:has-children={hasChildren}>
      {#if level === 1}
          <!-- Элементы первого уровня (горизонтальное меню) -->
          <a
@@ -91,8 +94,14 @@
  <style>
      /* Стили для отображения подменю при наведении */
      .top-level:hover > .hover-target,
-     .submenu-item:hover + .hover-target,
+     .menu-item:hover > .hover-target,
      .hover-target:hover {
+         display: block !important;
+     }
+     
+     /* Специфичные стили для каждого уровня */
+     .level-2:hover > .dropdown-submenu,
+     .level-3:hover > .dropdown-submenu {
          display: block !important;
      }
      
@@ -113,5 +122,38 @@
          top: 0;
          width: 10px;
          height: 100%;
+     }
+     
+     /* Обеспечиваем видимость подменю третьего и четвертого уровня */
+     .dropdown-submenu .dropdown-submenu {
+         z-index: 30; /* Увеличиваем z-index для вложенных подменю */
+     }
+     
+     /* Увеличиваем z-index для каждого уровня вложенности */
+     .level-1 > .dropdown-menu {
+         z-index: 10;
+     }
+     
+     .level-2 > .dropdown-submenu {
+         z-index: 20;
+     }
+     
+     .level-3 > .dropdown-submenu {
+         z-index: 30;
+     }
+     
+     /* Улучшаем позиционирование для глубоких уровней вложенности */
+     .dropdown-submenu {
+         position: absolute;
+         left: 100%; /* Размещаем справа от родителя */
+         top: 0;
+         min-width: 10rem; /* Минимальная ширина для удобства */
+     }
+     
+     /* Добавляем индикатор для элементов с подменю */
+     .has-children > a > span,
+     .has-children > a > span {
+         display: inline-block;
+         margin-left: 0.25rem;
      }
  </style>
