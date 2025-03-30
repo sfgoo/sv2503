@@ -2,6 +2,7 @@
     // src/routes/accept-invite/+page.svelte
     import { goto } from '$app/navigation';
     import { page } from '$app/stores';
+    import { fetchWithAuth } from '$lib/api'; // Импортируем функцию для работы с API
     let password = '';
     let error = '';
 
@@ -13,7 +14,7 @@
         }
 
         try {
-            const response = await fetch('http://121.127.37.57:8055/users/invite/accept', {
+            const response = await fetchWithAuth('http://121.127.37.57:8055/users/invite/accept', {
                 method: 'POST',
                 headers: { 'Content-Type': 'application/json' },
                 body: JSON.stringify({ token, password })

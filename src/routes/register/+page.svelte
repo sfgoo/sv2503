@@ -2,6 +2,7 @@
     // src/routes/register/+page.svelte
     import { onMount } from 'svelte';
     import { goto } from '$app/navigation';
+    import { fetchWithAuth } from '$lib/api'; // Импортируем функцию для работы с API
     let email = '';
     let password = '';
     let error = '';
@@ -9,7 +10,7 @@
 
     async function register() {
         try {
-            const response = await fetch('https://dir.chishmy.ru/users', {
+            const response = await fetchWithAuth('https://dir.chishmy.ru/users', {
                 method: 'POST',
                 headers: {
                     'Content-Type': 'application/json'

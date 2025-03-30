@@ -2,6 +2,7 @@
     // src/routes/login/+page.svelte
     import { goto } from '$app/navigation';
     import { getCurrentUser } from '$lib/api';
+    import { fetchWithAuth } from '$lib/api'; // Импортируем функцию для работы с API
     let email = '';
     let password = '';
     let error = '';
@@ -9,7 +10,7 @@
     async function login() {
         try {
             console.log('Login attempt:', { email, password });
-            const response = await fetch('https://dir.chishmy.ru/auth/login', {
+            const response = await fetchWithAuth('https://dir.chishmy.ru/auth/login', {
                 method: 'POST',
                 headers: { 'Content-Type': 'application/json' },
                 body: JSON.stringify({ email, password })

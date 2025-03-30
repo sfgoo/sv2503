@@ -11,7 +11,8 @@ const dirname =
 export default defineConfig({
 	server: {
 		allowedHosts: [
-			'0eca-195-133-8-97.ngrok-free.app', // Ваш ngrok-домен
+			// '0eca-195-133-8-97.ngrok-free.app',
+			' jywfayud2s.loclx.io',
 		],
 	},
 	plugins: [sveltekit()],
