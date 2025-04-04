@@ -1,4 +1,5 @@
 <script>
+  // src/lib/Footer.svelte
   export let year = new Date().getFullYear();
   export let companyName = "Моя Компания";
 </script>

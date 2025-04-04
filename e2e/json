@@ -1,0 +1,413 @@
+Array
+(
+    [calculator] => Array
+        (
+            [id] => 9
+            [expr] =>
+            [snippet] => calc_emb
+            [title] => Калькулятор компьютерной вышивки
+            [description] =>
+            [active] => 1
+            [properties] =>
+        )
+
+    [fields] => Array
+        (
+            [51] => Array
+                (
+                    [id] => 51
+                    [type] => radio
+                    [key] => mat_emb
+                    [tpl] =>
+                    [title] => Материал
+                    [description] =>
+                    [default_value] => mat_emb_shev
+                    [required] =>
+                    [params] => Array
+                        (
+                        )
+
+                    [properties] =>
+                    [values] => Array
+                        (
+                            [0] => Array
+                                (
+                                    [id] => 166
+                                    [idx] => 5
+                                    [field] => 51
+                                    [value] => mat_emb_shev
+                                    [title] => Шеврон
+                                    [description] =>
+                                    [active] => 1
+                                    [properties] =>
+                                )
+
+                            [1] => Array
+                                (
+                                    [id] => 165
+                                    [idx] => 4
+                                    [field] => 51
+                                    [value] => mat_emb_futb
+                                    [title] => Футболка
+                                    [description] =>
+                                    [active] => 1
+                                    [properties] =>
+                                )
+
+                            [2] => Array
+                                (
+                                    [id] => 164
+                                    [idx] => 3
+                                    [field] => 51
+                                    [value] => mat_emb_tolst
+                                    [title] => Толстовка
+                                    [description] =>
+                                    [active] => 1
+                                    [properties] =>
+                                )
+
+                            [3] => Array
+                                (
+                                    [id] => 163
+                                    [idx] => 2
+                                    [field] => 51
+                                    [value] => mat_emb_kepka
+                                    [title] => Кепка
+                                    [description] =>
+                                    [active] => 1
+                                    [properties] =>
+                                )
+
+                            [4] => Array
+                                (
+                                    [id] => 162
+                                    [idx] => 1
+                                    [field] => 51
+                                    [value] => mat_emb_holst
+                                    [title] => Холст
+                                    [description] =>
+                                    [active] => 1
+                                    [properties] =>
+                                )
+
+                        )
+
+                )
+
+            [46] => Array
+                (
+                    [id] => 46
+                    [type] => number
+                    [key] => shir_a3
+                    [tpl] =>
+                    [title] => Ширина (мм)
+                    [description] =>
+                    [default_value] => 50
+                    [required] =>
+                    [params] => Array
+                        (
+                            [min] => 10
+                            [max] => 400
+                            [step] => 1
+                        )
+
+                    [properties] =>
+                )
+
+            [45] => Array
+                (
+                    [id] => 45
+                    [type] => number
+                    [key] => vys_a3
+                    [tpl] =>
+                    [title] => Высота (мм)
+                    [description] =>
+                    [default_value] => 50
+                    [required] =>
+                    [params] => Array
+                        (
+                            [min] => 10
+                            [max] => 420
+                            [step] => 1
+                        )
+
+                    [properties] =>
+                )
+
+            [7] => Array
+                (
+                    [id] => 7
+                    [type] => number
+                    [key] => count
+                    [tpl] =>
+                    [title] => Количество
+                    [description] =>
+                    [default_value] => 1
+                    [required] =>
+                    [params] => Array
+                        (
+                            [min] => 1
+                            [max] => 10000
+                            [step] => 1
+                        )
+
+                    [properties] =>
+                )
+
+            [50] => Array
+                (
+                    [id] => 50
+                    [type] => radio
+                    [key] => proc_zap
+                    [tpl] =>
+                    [title] => Процент заполнения
+                    [description] =>
+                    [default_value] => 50
+                    [required] =>
+                    [params] => Array
+                        (
+                        )
+
+                    [properties] =>
+                    [values] => Array
+                        (
+                            [0] => Array
+                                (
+                                    [id] => 161
+                                    [idx] => 4
+                                    [field] => 50
+                                    [value] => 100
+                                    [title] => 100 %
+                                    [description] =>
+                                    [active] => 1
+                                    [properties] =>
+                                )
+
+                            [1] => Array
+                                (
+                                    [id] => 160
+                                    [idx] => 3
+                                    [field] => 50
+                                    [value] => 75
+                                    [title] => 75 %
+                                    [description] =>
+                                    [active] => 1
+                                    [properties] =>
+                                )
+
+                            [2] => Array
+                                (
+                                    [id] => 159
+                                    [idx] => 2
+                                    [field] => 50
+                                    [value] => 50
+                                    [title] => 50 %
+                                    [description] =>
+                                    [active] => 1
+                                    [properties] =>
+                                )
+
+                            [3] => Array
+                                (
+                                    [id] => 158
+                                    [idx] => 1
+                                    [field] => 50
+                                    [value] => 25
+                                    [title] => 25 %
+                                    [description] =>
+                                    [active] => 1
+                                    [properties] =>
+                                )
+
+                        )
+
+                )
+
+            [53] => Array
+                (
+                    [id] => 53
+                    [type] => radio
+                    [key] => oborot
+                    [tpl] =>
+                    [title] => Обратная сторона шеврона
+                    [description] =>
+                    [default_value] => not
+                    [required] =>
+                    [params] => Array
+                        (
+                        )
+
+                    [properties] =>
+                    [values] => Array
+                        (
+                            [0] => Array
+                                (
+                                    [id] => 174
+                                    [idx] => 4
+                                    [field] => 53
+                                    [value] => fliz
+                                    [title] => Клеевой флизелин
+                                    [description] =>
+                                    [active] => 1
+                                    [properties] =>
+                                )
+
+                            [1] => Array
+                                (
+                                    [id] => 173
+                                    [idx] => 3
+                                    [field] => 53
+                                    [value] => black
+                                    [title] => Черная липучка
+                                    [description] =>
+                                    [active] => 1
+                                    [properties] =>
+                                )
+
+                            [2] => Array
+                                (
+                                    [id] => 172
+                                    [idx] => 2
+                                    [field] => 53
+                                    [value] => white
+                                    [title] => Белая липучка
+                                    [description] =>
+                                    [active] => 1
+                                    [properties] =>
+                                )
+
+                            [3] => Array
+                                (
+                                    [id] => 171
+                                    [idx] => 1
+                                    [field] => 53
+                                    [value] => not
+                                    [title] => Нет
+                                    [description] =>
+                                    [active] => 1
+                                    [properties] =>
+                                )
+
+                        )
+
+                )
+
+            [52] => Array
+                (
+                    [id] => 52
+                    [type] => radio
+                    [key] => prog
+                    [tpl] =>
+                    [title] => Наличие программы
+                    [description] =>
+                    [default_value] => yep
+                    [required] =>
+                    [params] => Array
+                        (
+                        )
+
+                    [properties] =>
+                    [values] => Array
+                        (
+                            [0] => Array
+                                (
+                                    [id] => 170
+                                    [idx] => 4
+                                    [field] => 52
+                                    [value] => no
+                                    [title] => Нет
+                                    [description] =>
+                                    [active] => 1
+                                    [properties] =>
+                                )
+
+                            [1] => Array
+                                (
+                                    [id] => 169
+                                    [idx] => 3
+                                    [field] => 52
+                                    [value] => rastr
+                                    [title] => Есть растровый файл
+                                    [description] =>
+                                    [active] => 1
+                                    [properties] =>
+                                )
+
+                            [2] => Array
+                                (
+                                    [id] => 168
+                                    [idx] => 2
+                                    [field] => 52
+                                    [value] => design
+                                    [title] => Есть дизайн-макет в векторе
+                                    [description] =>
+                                    [active] => 1
+                                    [properties] =>
+                                )
+
+                            [3] => Array
+                                (
+                                    [id] => 167
+                                    [idx] => 1
+                                    [field] => 52
+                                    [value] => yep
+                                    [title] => Есть готовый файл для вышивальной машины
+                                    [description] =>
+                                    [active] => 1
+                                    [properties] =>
+                                )
+
+                        )
+
+                )
+
+            [15] => Array
+                (
+                    [id] => 15
+                    [type] => radio
+                    [key] => srok_uv
+                    [tpl] =>
+                    [title] => Цена при сроке
+                    [description] =>
+                    [default_value] => days3_uv
+                    [required] =>
+                    [params] => Array
+                        (
+                        )
+
+                    [properties] =>
+                    [values] => Array
+                        (
+                            [0] => Array
+                                (
+                                    [id] => 61
+                                    [idx] => 2
+                                    [field] => 15
+                                    [value] => poslezavtra_uv
+                                    [title] => Послезавтра
+                                    [description] =>
+                                    [active] => 1
+                                    [properties] =>
+                                )
+
+                            [1] => Array
+                                (
+                                    [id] => 62
+                                    [idx] => 1
+                                    [field] => 15
+                                    [value] => days3_uv
+                                    [title] => 3 дня
+                                    [description] =>
+                                    [active] => 1
+                                    [properties] =>
+                                )
+
+                        )
+
+                )
+
+        )
+
+    [id] => 9
+    [propkey] => 605337d08d07a0ce6b6acc2bc13d3bc30241c6b6
+)

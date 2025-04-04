@@ -1,0 +1,151 @@
+{*@formatter:off*}
+<h2>Смета</h2>
+
+<table id="element-to-print" class="xcc-results__table">
+    <tbody>
+        <tr>
+            <th colspan="3">Материал</th>
+        </tr>
+        <tr>
+            <td>Наименование материала:</td>
+            <td></td>
+            <td>{if isset($results.mat)}{$results.mat}{else}Не определено{/if}</td>
+        </tr>
+        <tr>
+            <td>Площадь</td>
+            <td>м²</td>
+            <td>{if isset($results.sqm)}{$results.sqm}{else}0{/if}</td>
+        </tr>
+        <tr>
+            <td>Периметр:</td>
+            <td>м</td>
+            <td>{if isset($results.perimetr)}{$results.perimetr}{else}0{/if}</td>
+        </tr>
+        <!--tr>
+            <td>Вес (примерно):</td>
+            <td>кг</td>
+            <td>{if isset($results.sqm) && isset($results.ves)}{$results.sqm * $results.ves}{else}0{/if}</td>
+        </tr-->
+        <!--tr>
+            <td>Стоимость материала с вышивкой:</td>
+            <td>м²</td>
+            <td>{if isset($results.mat.price)}{$results.mat.price} {'ms2_frontend_currency' | lexicon}{else}0 {'ms2_frontend_currency' | lexicon}{/if}</td>
+        </tr-->
+        <tr>
+            <td>Стоимость вышивки:</td>
+            <td>1 шт</td>
+            <td>{if isset($results.cost_mat)}{$results.cost_mat - $results.back_side.cost} {'ms2_frontend_currency' | lexicon}{else}0 {'ms2_frontend_currency' | lexicon}{/if}</td>
+        </tr>
+         {if ($results.back_side.cost)>0}
+        <tr>
+            <td>Обратная сторона:</td>
+            <td>{$results.back_side.title}</td>
+            <td>{if $results.back_side.is_min_price>0}(мин. цена) {/if}
+
+
+
+
+
+
+            {$results.back_side.cost} {'ms2_frontend_currency' | lexicon}</td>
+        </tr>
+        {/if}
+
+        {if isset($results.post_all) && $results.post_all > 0}
+        <tr>
+            <th colspan="3">Подготовка материально-технической базы </th>
+        </tr>
+        <tr>
+            <td>Стоимость программы</td>
+            <td>всего</td>
+            <td>{if isset($results.progPrice)}{$results.progPrice} {'ms2_frontend_currency' | lexicon}{else}0 {'ms2_frontend_currency' | lexicon}{/if}</td>
+        </tr>
+        <tr>
+            <td>Стоимость подготовки</td>
+            <td>всего</td>
+            <td>{if isset($results.setupCost)}{$results.setupCost} {'ms2_frontend_currency' | lexicon}{else}0 {'ms2_frontend_currency' | lexicon}{/if}</td>
+        </tr>
+        {/if}
+
+        <tr>
+            <th colspan="3">Всего</th>
+        </tr>
+        <tr>
+            <td>Количество:</td>
+            <td>шт</td>
+            <td>{if isset($results.count)}{$results.count}{else}0{/if}</td>
+        </tr>
+        <tr>
+			<td>Размер (ш х в):</td>
+			<td>см</td>
+			<td>{$form['shir_a3'] / 10} x {$form['vys_a3'] / 10}</td>
+		</tr>
+        <tr>
+            <td>Площадь всего:</td>
+            <td>см²</td>
+            <td>{if isset($results.sqm) && isset($results.count)}{$results.sqm * $results.count*10000}{else}0{/if}</td>
+        </tr>
+        <!--tr>
+            <td>Вес всего (примерно):</td>
+            <td>кг</td>
+            <td>{if isset($results.sqm) && isset($results.ves) && isset($results.count)}{$results.sqm * $results.ves * $results.count}{else}0{/if}</td>
+        </tr-->
+
+         {if ($results.back_side.cost)>0}
+        <tr>
+            <td>Обратная сторона:</td>
+            <td>{$results.back_side.title}</td>
+            <td> {$results.back_side.cost * $results.count} {'ms2_frontend_currency' | lexicon}</td>
+        </tr>
+        {/if}
+
+
+        <tr>
+            <td>
+            {if isset($results.materialOur)} Стоимость вышивки на нашем материале всего: {else} {$results.mat} - ваша. Стоимость вышивки всего:{/if}
+                        </td>
+            <td>за {if isset($results.count)}{$results.count}{else}0{/if} шт</td>
+            <td>{if isset($results.cost_mat) && isset($results.count)}{$results.cost_mat * $results.count - $results.back_side.cost * $results.count} {'ms2_frontend_currency' | lexicon}{else}0 {'ms2_frontend_currency' | lexicon}{/if}</td>
+        </tr>
+
+
+
+
+     {if ($results.discount.rate)>0}
+        <tr>
+            <td>
+            Дисконт
+                        </td>
+            <td>{$results.discount.rate} % </td>
+            <td>{$results.discount.amount} {'ms2_frontend_currency' | lexicon} </td>
+        </tr>
+      {/if}
+        <tr>
+            <td>Подготовка всего:</td>
+            <td>за {if isset($results.count)}{$results.count}{else}0{/if} шт</td>
+            <td>{if isset($results.post_all) && isset($results.count)}{$results.post_all} {'ms2_frontend_currency' | lexicon} {else}0 {'ms2_frontend_currency' | lexicon}{/if}</td>
+        </tr>
+        <tr>
+            <td>Дата:</td>
+            <td></td>
+            <td>{if isset($results.data)}{$results.data}{else}Не определено{/if}</td>
+        </tr>
+    </tbody>
+    <tfoot>
+        <tr>
+            <td colspan="2">Итого</td>
+            <td>{if isset($results.cost_all)}{$results.cost_all} {'ms2_frontend_currency' | lexicon}{else}0 {'ms2_frontend_currency' | lexicon}{/if}</td>
+        </tr>
+    </tfoot>
+</table>
+
+<p></p>
+<div>
+    Окончательную стоимость необходимо проверить с менеджером. В случае расхождения расчетов обязательно пишите на почту директору - neostamp@yandex.ru <br>
+    Минимальная стоимость заказа - не менее 1/4 кв.м соответствующего материала. Вы можете увеличить количество изделий или размеры.
+</div>
+
+<script src="https://printjs-4de6.kxcdn.com/print.min.js"></script>
+<link rel="stylesheet" type="text/css" href="https://printjs-4de6.kxcdn.com/print.min.css">
+<button type="button" onclick="printJS('element-to-print', 'html')">Распечатать или Сохранить в PDF</button>
+{*@formatter:on*}

@@ -1,4 +1,6 @@
+// vite.config.js
 import { svelteTesting } from '@testing-library/svelte/vite';
+import tailwindcss from '@tailwindcss/vite';
 import { sveltekit } from '@sveltejs/kit/vite';
 import { defineConfig } from 'vite';
 import path from 'node:path';
@@ -11,14 +13,17 @@ const dirname =
 export default defineConfig({
 	server: {
 		allowedHosts: [
-			// '0eca-195-133-8-97.ngrok-free.app',
-			' jywfayud2s.loclx.io',
+			'0eca-195-133-8-97.ngrok-free.app', // Ваш ngrok-домен
 		],
+		proxy: {
+			'/api': {
+				target: 'https://dir.chishmy.ru',
+				changeOrigin: true,
+				rewrite: (path) => path.replace(/^\/api/, ''),
+			},
+		},
 	},
-	plugins: [sveltekit()],
-	css: {
-		postcss: './postcss.config.js',
-	},
+	plugins: [tailwindcss(), sveltekit()],
 	test: {
 		workspace: [
 			{

@@ -1,0 +1,433 @@
+<?php
+// Доступные переменные:
+//
+// $calculator - массив с данными калькулятора
+// $fields - массив с данными полей калькулятора
+// $form - массив с данными, заполненными пользователем
+
+// Структура типов полей:
+//
+// text:
+//   string
+//
+// number:
+//   float
+//
+// radio:
+//   array {
+//     ["id"] => int
+//     ["field"] => int
+//     ["title"] => string
+//     ["value"] => string
+//   }
+//
+// checkbox:
+//   array {
+//     [0] => array {
+//       ["id"] => int
+//       ["field"] => int
+//       ["title"] => string
+//       ["value"] => string
+//     }
+//     [1] => array {...}
+//     ...
+//   }
+//
+// msproducts:
+//   array {
+//     ["id"] => int
+//     ["pagetitle"] => string
+//     ["price"] => float
+//     ["other_product_fields"] => string|int|float|array
+//   }
+// Материал
+//$material_name = $form['material']['pagetitle']; // название
+//$material_price = (float)$form['material']['price']; // цена за кв.м.
+//$material_cost = ceil($material_price * $sqm); // стоимость
+
+// Материал
+
+// case {$value['value']}:  //   {$value['title']}        $mat_price_z = ''; $mat_price_pz = ''; $mat_ves = '';        break;
+// case {$value['value']}:  //   {$value['title']}        $krai_price_z = ''; $krai_price_pz = '';         break;
+
+/**
+ * Обозначаем основные переменные
+ */
+const BASE_COST_PER_SQM = 20000;    // Базовая стоимость за кв.м вышивки
+const SETUP_COST = 500;           // Стоимость настройки (если программы нет)
+const MATERIAL_ADJUSTMENT = [     // Корректировка стоимости в зависимости от материала
+    'mat_emb_holst' => 1.0,
+    'mat_emb_kepka' => 2.2,
+    'mat_emb_tolst' => 2.0,
+    'mat_emb_futb' => 1.5,
+    'mat_emb_shev' => 0.9,
+];
+const MATERIAL_OUR = [     // Корректировка стоимости в зависимости от нашести материала
+    'mat_emb_holst' => true,
+    'mat_emb_kepka' => null,
+    'mat_emb_tolst' => null,
+    'mat_emb_futb' => null,
+    'mat_emb_shev' => true,
+];
+
+
+const MINIMUM_COST = 50;         // Минимальная стоимость за единицу
+const DEFAULT_WEIGHT = 0.1;       // Примерный вес материала (кг/м², уточните реальное значение)
+const MINIMUM_SQM = 0.0001;       // Минимальная площадь для расчётов
+const PROGRAM = [     // Корректировка стоимости в зависимости от наличия  программы
+ 'no' => 1500,
+ 'rastr' => 1000,
+ 'design'=> 500 ,
+ 'yep' => 0   ,
+  ];
+const SROK = [     // Корректировка стоимости в зависимости от срока
+ 'poslezavtra_uv' => 1.2,
+ 'days3_uv' => 1,
+   ];
+
+const DISCOUNT_RATES = [ // Корректировка стоимости в зависимости от объема
+    300 => 0.15,
+    100 => 0.10,
+    50 => 0.05
+];
+
+const BACK_SIDE_COSTS = [
+    'not' => 0,      // Нет обратной стороны
+    'white' => 10000,  // Белая липучка
+    'black' => 10000,  // Черная липучка
+    'fliz' => 5000    // Клеевой флизелин
+];
+
+
+/**
+ * Функция для получения коэффициента корректировки материала
+ * @param string $materialKey Ключ материала из формы
+ * @return float Коэффициент корректировки
+ */
+function getMaterialAdjustment($materialKey) {
+    return MATERIAL_ADJUSTMENT[$materialKey] ?? 1.0;
+}
+
+function getMaterialOur($our) {
+    return MATERIAL_OUR[$our] ;
+}
+
+function getProgramPrice($prg) {
+    return PROGRAM[$prg] ?? 3000;
+}
+
+function getSrokRate($srok) {
+    return SROK[$srok] ?? 1;
+}
+
+function calculateDiscount($quantity) {
+    foreach (DISCOUNT_RATES as $minQty => $rate) {
+        if ($quantity >= $minQty) {
+            return $rate;
+        }
+    }
+    return 0.0;
+}
+
+
+/**
+ * Функция для очистки и валидации входных данных
+ * @param mixed $value Значение из формы
+ * @param string $type Тип данных (string, int)
+ * @param array $allowedValues Допустимые значения (для строк)
+ * @param array $range Диапазон значений (для чисел: [min, max])
+ * @return mixed Очищенное значение
+ */
+function sanitizeInput($value, $type = 'string', $allowedValues = [], $range = []) {
+    if (!isset($value)) return null;
+
+    switch ($type) {
+        case 'int':
+            $value = filter_var($value, FILTER_VALIDATE_INT);
+            if ($value !== false && !empty($range)) {
+                $value = max($range[0], min($range[1], $value));
+            }
+            return $value > 0 ? $value : $range[0]; // Минимальное значение вместо 0
+        case 'string':
+            $value = filter_var($value, FILTER_SANITIZE_STRING);
+            return in_array($value, $allowedValues) ? $value : (empty($allowedValues) ? $value : null);
+        default:
+            return $value;
+    }
+}
+
+
+$rate = 1; // коэффициент
+$results = [];
+$oborot = sanitizeInput(isset($form['oborot']['value']) ? $form['oborot']['value'] : null, 'string', [
+    'not', 'white', 'black', 'fliz'
+]) ?? 'not';
+
+$prog = sanitizeInput(isset($form['prog']['value']) ? $form['prog']['value'] : null, 'string', ['no', 'rastr', 'design', 'yep']) ?? 'yep';
+$mat_emb = sanitizeInput(isset($form['mat_emb']['value']) ? $form['mat_emb']['value'] : null, 'string', [
+    'mat_emb_holst', 'mat_emb_kepka', 'mat_emb_tolst', 'mat_emb_futb', 'mat_emb_shev'
+]) ?? 'mat_emb_shev';
+
+$mat = $form['mat_emb']['title'] ;
+$shir_a3 = sanitizeInput($form['shir_a3'] ?? null, 'int', [], [10, 400]) ?? 50;
+$vys_a3 = sanitizeInput($form['vys_a3'] ?? null, 'int', [], [10, 420]) ?? 50;
+$count = sanitizeInput($form['count'] ?? null, 'int', [], [1, 10000]) ?? 1;
+$proc_zap = sanitizeInput(isset($form['proc_zap']['value']) ? $form['proc_zap']['value'] : null, 'string', ['25', '50', '75', '100']) ?? '50';
+$srok_uv = sanitizeInput(isset($form['srok_uv']['value']) ? $form['srok_uv']['value'] : null, 'string', ['poslezavtra_uv', 'days3_uv']) ?? 'days3_uv';
+
+$fill_factor = (int)$proc_zap / 100 + 1;
+
+$sqm = max(($shir_a3 * $vys_a3) / 1000000, MINIMUM_SQM);
+$perimetr = ($shir_a3 + $vys_a3) * 2 / 1000;
+$base_cost = $sqm * BASE_COST_PER_SQM * $fill_factor;
+$material_factor = getMaterialAdjustment($mat_emb);
+$materialOur = getMaterialOur($mat_emb) ;
+$progPrice = getProgramPrice($prog);
+$srokRate = getSrokRate($srok_uv);
+
+
+/**
+ * Функция для получения стоимости обработки обратной стороны
+ */
+//function getBackSideCost($type) {
+ //   return BACK_SIDE_COSTS[$type] ?? 0;
+//}
+
+// Получаем стоимость обработки обратной стороны
+//$back_side_cost = getBackSideCost($oborot) * $sqm  ;
+
+
+
+
+/**
+ * Функция для получения стоимости обработки обратной стороны с учетом минимумов
+ */
+
+
+
+/**
+ * Функция для получения стоимости обработки обратной стороны с учетом минимумов
+ * Возвращает массив с cost (стоимость) и is_min (флаг применения минимальной цены)
+ */
+function getBackSideCost($type, $sqm) {
+    // Рассчитываем стоимость по площади
+    $calculated_cost = BACK_SIDE_COSTS[$type] * $sqm;
+    $is_min = false;
+
+    // Применяем минимальные цены
+    switch($type) {
+        case 'white':
+        case 'black':
+            if ($calculated_cost < 25) {
+                $calculated_cost = 25;
+                $is_min = true;
+            }
+            break;
+        case 'fliz':
+            if ($calculated_cost < 20) {
+                $calculated_cost = 20;
+                $is_min = true;
+            }
+            break;
+    }
+
+    return [
+        'cost' => $calculated_cost,
+        'is_min' => $is_min
+    ];
+}
+
+// Меняем вызов функции (строка ~280)
+$back_side_data = getBackSideCost($oborot, $sqm);
+$back_side_cost = $back_side_data['cost'];
+
+
+
+
+
+
+
+$unit_cost = max(ceil($base_cost * $material_factor * $srokRate + $back_side_cost), MINIMUM_COST * $srokRate);
+
+
+
+$total_cost = $unit_cost * $count;
+
+$discountRate = calculateDiscount($count);
+$total_cost_before_discount = $unit_cost * $count;
+$discountAmount = $total_cost_before_discount * $discountRate;
+$total_cost = $total_cost_before_discount - $discountAmount;
+
+
+
+
+
+
+
+$post_all = $progPrice + SETUP_COST;
+$cost_all = $total_cost + $post_all;
+
+
+setlocale(LC_ALL, 'ru_RU', 'ru_RU.UTF-8', 'ru', 'russian');
+
+
+
+$sqm_count = $sqm * $count;
+
+
+
+/**
+
+ *
+ *
+ * Готовим результаты
+ */
+$results = [
+     'setupCost' => SETUP_COST,
+     'progPrice' => $progPrice,
+     'discount' => [
+        'rate' => $discountRate * 100,
+        'amount' => $discountAmount,
+        'total_before_discount' => $total_cost_before_discount
+    ],
+   'back_side' => [
+    'type' => $oborot,
+    'cost' => $back_side_cost,
+    'title' => isset($form['oborot']['title']) ? $form['oborot']['title'] : 'Не указано',
+    'is_min_price' => $back_side_data['is_min'] // Флаг применения минимальной цены
+],
+
+
+
+    'rate' => $rate,
+    'count' => $count,
+    'perimetr' => $perimetr,
+    'sqm' =>  $sqm,                /////(ceil(number_format($sqm, 3, '.', '') * 100) / 100), // округляем в большую сторону
+    'cost' => $cost,
+    'material' => [
+        'name' => $material_name,
+        'price' => $material_price,
+        'cost' => $material_cost,
+    ],
+    'mat' => $mat,
+    'min_tir' => $min_tir,
+    'materialOur' => $materialOur,
+    'ear' => $ear,
+    'klei' => $klei,
+    'til_cost' => $til_cost,
+    'luv_price' => $luv_price,
+    'luv_cost' => $luv_cost,
+    'mat_price' => $mat_price_print,
+    'ves' => $mat_ves/1000,
+    'krai_price' => $krai_price,
+    'krai_cost' => $krai_cost,
+    'cost_mat' => $unit_cost,
+    'tilling' => $tilling,
+    'data'=> strftime("%d %m %Y г", time()),
+//    'klei_cost' => $klei_cost,
+//    'karm_cost' => $form['klei'][0]['value']*$sqm,
+//    'tuba_cost' => $tuba_cost,
+    'post_all' => $post_all,
+    'result_cost' => $result_cost,
+   'cost_all' => $cost_all,
+'rezка' => $rezка ,
+'rez' => $rez,
+];
+
+
+$client  = @$_SERVER['HTTP_CLIENT_IP'];
+$forward = @$_SERVER['HTTP_X_FORWARDED_FOR'];
+$remote  = @$_SERVER['REMOTE_ADDR'];
+
+if(filter_var($client, FILTER_VALIDATE_IP)) $ip = $client;
+elseif(filter_var($forward, FILTER_VALIDATE_IP)) $ip = $forward;
+else $ip = $remote;
+
+$email_message = "
+<h3>Детали заказа:</h3>
+<ul>
+   <li><strong>Размер:</strong> {$shir_a3} × {$vys_a3} мм</li>
+    <li><strong>Количество:</strong> {$count} шт</li>
+    <li><strong>Материал:</strong> {$mat}</li>
+    <li><strong>Обратная сторона:</strong> ".$results['back_side']['title']."</li>
+    <li><strong>Процент заполнения:</strong> {$proc_zap}%</li>
+    <li><strong>Наличие программы:</strong> ".($prog == 'yep' ? 'Есть' : ($prog == 'no' ? 'Нет' : ($prog == 'design' ? 'Векторный макет' : 'Растровый файл')))."</li>
+    <li><strong>Срок изготовления:</strong> ".($srok_uv == 'days3_uv' ? '3 дня' : 'Послезавтра')."</li>
+    <li><strong>Стоимость единицы:</strong> ".number_format($unit_cost, 2)." ₽</li>
+    <li><strong>Общая стоимость:</strong> ".number_format($cost_all, 2)." ₽</li>
+</ul>";
+
+$props = array(
+    'debug' => '0',
+    'hideOutput' => '0',
+    'message' => $email_message,
+    'subject' => "Заказ вышивки от {$ip}",
+    'to' => 'ooosfg@gmail.com',
+    'fromName' => 'Embroidery Calculator',
+    'html' => '1'
+);
+
+
+/*
+$props = array(
+    'debug' => '0',
+    'hideOutput' => '0',
+    'message' => "
+
+   Основные параметры заказа:
+    - Размер: {$shir_a3} × {$vys_a3} мм
+    - Количество: {$count} шт
+    - Скидка: ".($discountRate*100)."%
+    - Стоимость до скидки: ".number_format($total_cost_before_discount, 2)." ₽
+    - Итоговая стоимость: ".number_format($cost_all, 2)." ₽
+    - Материал: {$mat}
+    - Срок: ".getSanitizedTitle($srok_uv, 15);
+
+
+
+
+
+   'rate' => $rate,
+    'count' => $count,
+    'perimetr' => $perimetr,
+    'sqm' => (ceil(number_format($sqm, 3, '.', '') * 100) / 100), // округляем в большую сторону
+    'cost' => $cost,
+    'material' => [
+        'name' => $material_name,
+        'price' => $material_price,
+        'cost' => $material_cost,
+    ],
+    'mat' => $mat,
+    'min_tir' => $min_tir,
+    'ear' => $ear,
+    'klei' => $klei,
+    'til_cost' => $til_cost,
+    'luv_price' => $luv_price,
+    'luv_cost' => $luv_cost,
+    'mat_price' => $mat_price_print,
+    'ves' => $mat_ves/1000,
+    'krai_price' => $krai_price,
+    'krai_cost' => $krai_cost,
+    'cost_mat' => $cost_mat_print,
+    'tilling' => $tilling,
+
+    'post_all' => $post_all,
+    'result_cost' => $result_cost,
+   'cost_all' => 1009,
+'rezка' => $rezка ,
+'rez' => $rez,
+
+
+    ",
+    'subject' => $ip,
+    'to' => 'ooosfg+12@gmail.com',
+    'fromName' => 'emb',
+    'html' => '1',
+
+);
+*/
+
+$modx->runSnippet('QuickEmail',$props);
+
+
+return $results;

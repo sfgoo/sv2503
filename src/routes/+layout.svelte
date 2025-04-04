@@ -1,4 +1,6 @@
+<!-- src/routes/+layout.svelte -->
 <script>
+    //src/routes/+layout.svelte
     import Nav from '$lib/Nav.svelte';
     import Footer from '$lib/Footer.svelte';
     import { getCurrentUser } from '$lib/api';
@@ -9,19 +11,21 @@
     onMount(async () => {
         user = await getCurrentUser();
     });
+    export let data;
 </script>
 
 <div class="layout">
     <header>
-        <Nav logoText="Мой Каталог" logoHref="/" />
+        <Nav catalog={data.catalog} logoText="Мой Каталог" logoHref="/" />
     </header>
-
     <main>
         <slot />
     </main>
-
-    <Footer />
+    <footer>
+        <Footer />
+    </footer>
 </div>
+
 
 <style>
     .layout {
@@ -29,7 +33,6 @@
         flex-direction: column;
         min-height: 100vh;
     }
-
     main {
         flex: 1;
         padding: 2rem 1rem;

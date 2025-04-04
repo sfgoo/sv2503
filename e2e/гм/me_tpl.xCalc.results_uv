@@ -1,0 +1,207 @@
+{*@formatter:off*}
+<h2>Смета</h2>
+
+<table id="element-to-print" class="xcc-results__table">
+	<tbody>
+		<tr>
+			<th colspan="3">Материал </th>
+		</tr>
+		<tr>
+			<td>Наименование материала:</td>
+			<td></td>
+			<td>{$results['mat']['name']} </td>
+		</tr>
+		<tr>
+			<td>Площадь </td>
+			<td>м2</td>
+			<td>{$results['sqm']}</td>
+		</tr>
+		<tr>
+			<td>Периметр:</td>
+			<td>м</td>
+			<td>{($form['shir'] + $form['vys'])*2/1000 }</td>
+		</tr>
+		<tr>
+			<td>Вес (примерно):</td>
+			<td>кг </td>
+			<td>{$results['sqm'] * $results['ves'] }</td>
+		</tr>
+
+		<tr>
+			<td>Стоимость материала с печатью:</td>
+			<td>м2</td>
+			<td>{$results['mat_price']} {'ms2_frontend_currency' | lexicon}</td>
+		</tr>
+
+				<tr>
+			<td>Стоимость материала с печатью:</td>
+			<td>1 шт</td>
+			<td>{$results['cost_mat']} {'ms2_frontend_currency' | lexicon}</td>
+		</tr>
+
+
+
+{if $results['luv_cost']>0 or $results['klei'] or $results['til_cost'] or $results['krai_cost'] ?}
+		<tr>
+			<th colspan="3">Постпечатка</th>
+		</tr>
+
+
+		   	{foreach $results['klei'] as $v}
+
+
+		  <tr>
+			<td>{$v['name']}</td>
+			<td>всего</td>
+			<td>{$v['cost']} {'ms2_frontend_currency' | lexicon}</td>
+		</tr>
+
+			{/foreach}
+
+
+
+			{*if $results['karm_cost']?}
+				<tr>
+					<td>{$form['klei'][0]['title']}</td>
+					<td>1 шт</td>
+					<td> {$form['klei'][0]['value']}{'ms2_frontend_currency' | lexicon}</td>
+				</tr>
+					<tr>
+					<td>{$form['klei'][0]['title']}</td>
+					<td>всего</td>
+					<td>{$results['karm_cost']} {'ms2_frontend_currency' | lexicon}</td>
+				</tr>
+			{/if}
+
+
+		   {if $results['tuba_cost']?}
+				<tr>
+					<td>{$form['klei'][1]['title']}</td>
+					<td>всего</td>
+					<td>{$results['tuba_cost']} {'ms2_frontend_currency' | lexicon}</td>
+				</tr>
+			{/if*}
+
+			 {if $results['luv_cost']?}
+				<tr>
+					<td>Стоимость люверсa</td>
+					<td>1 шт</td>
+					<td>{$results['luv_price']} {'ms2_frontend_currency' | lexicon}</td>
+				</tr>
+					<tr>
+					<td>Стоимость: {$form['luv']['title'] }</td>
+					<td>всего</td>
+					<td>{$results['luv_cost']} {'ms2_frontend_currency' | lexicon}</td>
+				</tr>
+
+			{/if}
+
+			 {if $results['krai_cost']?}
+				<tr>
+					<td> {$form['krai_uv']['title']}</td>
+					<td>1 м </td>
+					<td>{$results['krai_price']} {'ms2_frontend_currency' | lexicon}</td>
+				</tr>
+					<tr>
+					<td> {$form['krai_uv']['title']}</td>
+					<td>всего</td>
+					<td>{$results['krai_cost']} {'ms2_frontend_currency' | lexicon}</td>
+				</tr>
+
+			{/if}
+
+
+
+
+
+		 	{if $results['til_cost']?}
+		 <tr>
+			<td>Тиллинг</td>
+			<td>1 м</td>
+			<td>{$results['tilling']} {'ms2_frontend_currency' | lexicon}</td>
+		</tr
+				<tr>
+					<td>Тиллинг</td>
+					<td>всего</td>
+					<td>{$results['til_cost']} {'ms2_frontend_currency' | lexicon}</td>
+				</tr>
+			{/if}
+
+
+		<tr>
+			<td>Постпечатка всего:</td>
+			<td>на 1 шт</td>
+			<td>{$results['post_all']} {'ms2_frontend_currency' | lexicon}</td>
+		</tr>
+
+
+{/if}
+
+
+
+
+		<tr>
+			<th colspan="3">Всего</th>
+		</tr>
+		<tr>
+			<td>Количество:</td>
+			<td>шт</td>
+			<td>{$form['count'] }</td>
+		</tr>
+					<tr>
+			<td>Размер (ш х в):</td>
+			<td>м</td>
+			<td>{$form['shir'] / 1000} x {$form['vys'] / 1000}</td>
+		</tr>
+
+		<tr>
+			<td>Площадь всего:</td>
+			<td>м2</td>
+			<td>{$results['sqm'] * $form['count']} </td>
+		</tr>
+		<tr>
+			<td>Вес всего (примерно):</td>
+			<td>кг </td>
+			<td>{$results['sqm'] * $results['ves'] * $form['count'] }</td>
+		</tr>
+		<tr>
+			<td>Стоимость материала с печатью всего:</td>
+			<td>за {$form['count'] } шт</td>
+			<td>{$results['cost_mat'] * $form['count'] } {'ms2_frontend_currency' | lexicon}</td>
+		</tr>
+
+		<tr>
+			<td>Постпечатка всего:</td>
+			<td>за {$form['count'] } шт</td>
+			<td>{$results['post_all'] * $form['count']} {'ms2_frontend_currency' | lexicon}</td>
+		</tr>
+
+				<tr>
+			<td>Дата:</td>
+			<td></td>
+			<td>{$results['data']}</td>
+		</tr>
+
+
+	</tbody>
+	<tfoot>
+		<tr>
+			<td colspan="2">Итого </td>
+			<td>{$results['cost_all'] } {'ms2_frontend_currency' | lexicon}</td>
+		</tr>
+	</tfoot>
+</table>
+
+<p></p>
+<div>
+	Окончательную стоимость необходимо проверить с менеджером. В случае расхождения расчетов обязательно пишите на почту директору - neostamp@yandex.ru <br>
+	Минимальная стоимость заказа - не менее 1/4 кв.м соответствующего материала. Вы можете увеличить количество изделий или размеры.
+</div>
+
+<script src="https://printjs-4de6.kxcdn.com/print.min.js"></script>
+ <link rel="stylesheet" type="text/css" href="https://printjs-4de6.kxcdn.com/print.min.css">
+
+
+ <button type="button" onclick="printJS('element-to-print', 'html')">
+    Распечатать или Сохранить в PDF
+ </button>
